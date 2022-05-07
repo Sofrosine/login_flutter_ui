@@ -53,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       activeTitle = title;
     });
-    print(title);
   }
 
   @override
@@ -160,11 +159,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class CodeMethod extends StatelessWidget {
+class CodeMethod extends StatefulWidget {
   final String title;
   final String activeTitle;
   final Function onPress;
-
   const CodeMethod(
       {Key? key,
       required this.title,
@@ -173,24 +171,33 @@ class CodeMethod extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<CodeMethod> createState() => _CodeMethodState();
+}
+
+class _CodeMethodState extends State<CodeMethod> {
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
           onTap: () {
-            onPress(title);
+            widget.onPress(widget.title);
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
             decoration: BoxDecoration(
                 border: Border.all(
-                    color: activeTitle == title ? Colors.blue : Colors.grey),
+                    color: widget.activeTitle == widget.title
+                        ? Colors.blue
+                        : Colors.grey),
                 borderRadius: const BorderRadius.all(Radius.circular(20))),
             child: Row(
               children: [
                 Icon(
                   Icons.phone,
-                  color: activeTitle == title ? Colors.blue : Colors.grey,
+                  color: widget.activeTitle == widget.title
+                      ? Colors.blue
+                      : Colors.grey,
                   size: 16.0,
                   semanticLabel: 'misscall icon',
                 ),
@@ -198,9 +205,11 @@ class CodeMethod extends StatelessWidget {
                   width: 8,
                 ),
                 Text(
-                  title,
+                  widget.title,
                   style: TextStyle(
-                      color: activeTitle == title ? Colors.blue : Colors.grey,
+                      color: widget.activeTitle == widget.title
+                          ? Colors.blue
+                          : Colors.grey,
                       fontWeight: FontWeight.w500,
                       fontSize: 11),
                 )
